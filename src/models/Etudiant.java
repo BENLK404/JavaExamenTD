@@ -2,21 +2,26 @@ package models;
 
 import database.Connectivity;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
-import org.w3c.dom.ls.LSOutput;
 import tools.Tools;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+
+import static models.Note.printSeparator;
+import static models.Note.selectIdEvaluation;
 
 public class Etudiant {
     private int idEtudiant;
     private String nomEtudiant;
     private String prenomEtudiant;
     private String sexeEtudiant;
+
+    public Etudiant(int idEtudiant, String nomEtudiant, String prenomEtudiant) {
+        this.idEtudiant = idEtudiant;
+        this.nomEtudiant = nomEtudiant;
+        this.prenomEtudiant = prenomEtudiant;
+    }
 
     public String getNomClasse() {
         return nomClasse;
@@ -321,6 +326,44 @@ public class Etudiant {
                 idEtudiant,nomEtudiant, prenomEtudiant, sexeEtudiant,  nomClasse,adresseEtudiant,
                 telephoneEtudiant, dateNaissanceEtudiant,emailEtudiant);
     }
+    public String afficherEtudiantEvaluer() throws SQLException {
+        return String.format("%-40s %-40s %-40s",
+                idEtudiant,nomEtudiant,prenomEtudiant);
 
+    }
+    public static void afficherEtudiantEvaluerTableau(ObservableList<Etudiant> etudiants) throws SQLException {
+        System.out.printf("%-40s %-40s %-10s\n",
+                "ID Etudiant","Nom","Prenom");
+        printSeparator(100);
+        for (Etudiant etudiant : etudiants) {
+            System.out.println(etudiant.afficherEtudiantEvaluer());
+        }
+    }
+    public static  void selectEtudientsFromEvaluation(String matiereEvaluation, String typeEvaluation) throws SQLException {
+        Connection connection = Connectivity.getDbConnection();
+        Etudiant etudiant ;
+        ObservableList listEtudient = FXCollections.observableArrayList();
+        String sql = "select nom,prenom,e.id_etudiant\n" +
+                "from notes " +
+                "join ecole.etudiants e on e.id_etudiant = notes.id_etudiant" +
+                " join ecole.evaluations e2 on e2.id_evaluation = notes.id_evaluation" +
+                " where e2.id_evaluation =?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, selectIdEvaluation(matiereEvaluation,typeEvaluation));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                etudiant = new Etudiant(
+                        resultSet.getInt("id_etudiant"),
+                        resultSet.getString("nom"),
+                        resultSet.getString("prenom")
+                );
+                listEtudient.add((etudiant));
+            }
+        }
+        afficherEtudiantEvaluerTableau(listEtudient);
+    }
+    public static void main(String[] args) throws SQLException {
+        selectEtudientsFromEvaluation("Javascript","Examen");
+    }
 }
 
