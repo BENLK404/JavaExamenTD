@@ -187,8 +187,11 @@ public class Classement {
         System.out.printf("%-15s %-15s %-20s %-30s %-20s %-25s %-10s %-15s\n",
                 "Noms", "Prenoms", "Classes", "Evaluations", "Types", "Matières", "Notes", "Dates");
         printSeparator(160);
+        int k = 1;
         for (Classement classement : classements) {
-            System.out.println(classement);
+
+            System.out.println(k+"-"+classement);
+            k++;
         }
     }
 
@@ -200,7 +203,7 @@ public class Classement {
     }
     @Override
     public String toString() {
-        return String.format("%-15s %-15s %-20s %-30s %-20s %-25s %-10.2f %-15s",
+        return String.format("%-13s %-15s %-20s %-30s %-20s %-25s %-10.2f %-15s",
                 nomEtudient, prenomEtudient, classeEtudient, nomEvaluation, typeEvaluation, matiere, note, dateEvaluation);
     }
     public static ObservableList<Classement> displayClassementByClasseType(String classe, String type,String niveau) throws SQLException {

@@ -5,28 +5,28 @@ import models.Etudiant;
 import models.LaClasse;
 import models.Matiere;
 import models.Note;
+import tools.Tools;
 import views.MenuPrincipale;
 
 import java.sql.SQLException;
 
 
 public class Main {
+    static String logo =" _______       ___      ___  ________      ___           ___  ___      ________      _________    ___      ________      ________           ________      ________    ________   \n" +
+            "|\\  ___ \\     |\\  \\    /  /||\\   __  \\    |\\  \\         |\\  \\|\\  \\    |\\   __  \\    |\\___   ___\\ |\\  \\    |\\   __  \\    |\\   ___  \\        |\\   __  \\    |\\   __  \\  |\\   __  \\  \n" +
+            "\\ \\   __/|    \\ \\  \\  /  / /\\ \\  \\|\\  \\   \\ \\  \\        \\ \\  \\\\\\  \\   \\ \\  \\|\\  \\   \\|___ \\  \\_| \\ \\  \\   \\ \\  \\|\\  \\   \\ \\  \\\\ \\  \\       \\ \\  \\|\\  \\   \\ \\  \\|\\  \\ \\ \\  \\|\\  \\ \n" +
+            " \\ \\  \\_|/__   \\ \\  \\/  / /  \\ \\   __  \\   \\ \\  \\        \\ \\  \\\\\\  \\   \\ \\   __  \\       \\ \\  \\   \\ \\  \\   \\ \\  \\\\\\  \\   \\ \\  \\\\ \\  \\       \\ \\   __  \\   \\ \\   ____\\ \\ \\   ____\\\n" +
+            "  \\ \\  \\_|\\ \\   \\ \\    / /    \\ \\  \\ \\  \\   \\ \\  \\____    \\ \\  \\\\\\  \\   \\ \\  \\ \\  \\       \\ \\  \\   \\ \\  \\   \\ \\  \\\\\\  \\   \\ \\  \\\\ \\  \\       \\ \\  \\ \\  \\   \\ \\  \\___|  \\ \\  \\___|\n" +
+            "   \\ \\_______\\   \\ \\__/ /      \\ \\__\\ \\__\\   \\ \\_______\\   \\ \\_______\\   \\ \\__\\ \\__\\       \\ \\__\\   \\ \\__\\   \\ \\_______\\   \\ \\__\\\\ \\__\\       \\ \\__\\ \\__\\   \\ \\__\\      \\ \\__\\   \n" +
+            "    \\|_______|    \\|__|/        \\|__|\\|__|    \\|_______|    \\|_______|    \\|__|\\|__|        \\|__|    \\|__|    \\|_______|    \\|__| \\|__|        \\|__|\\|__|    \\|__|       \\|__|   \n" +
+            "                                                                                                                                                                                 \n" +
+            "                                                                                                                                                                                 \n" +
+            "                                                                                                                                                                                 ";
 
     public static void main(String[] args) throws SQLException {
-//        Etudiant etudiant = new Etudiant("Jean", "Dupont", "M", "123 Rue Exemple", "jean.dupont@example.com", "1234567890", LocalDate.of(2000, 1, 1),1);
-//        etudiant.addEtudiant();
-//        Etudiant etudiant = new Etudiant();
-//
-//        Matiere matiere = new Matiere();
-//        MenuPrincipale menuPrincipale = new MenuPrincipale();
-//        menuPrincipale.demanderInformationsEtudiant();
-//        menuPrincipale.demanderInformationsMatiere();
-//        menuPrincipale.demanderInformationsNote();
-//            Note note = new Note(10.59,1,1,"Passable");
-//            note.addNote();
+        Tools.textInPurple(logo);
         MyController myController = new MyController();
         myController.run();
-//        LaClasse.getIdClasseByName("SIL21");
-//        etudiant.updateEtudiant(1,"Aguem","Espoir","M","Assivito","agenpdmn@gmail.com","8746672874",LocalDate.of(2000,4,12),1);
+
     }
 }
