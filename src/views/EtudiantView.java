@@ -106,5 +106,12 @@ public class EtudiantView {
         }
         System.out.println();
     }
-
+    public static void afficherEtudiantEvaluerTableau(ObservableList<Etudiant> etudiants) throws SQLException {
+        System.out.printf("%-40s %-40s %-10s\n",
+                "ID Etudiant","Nom","Prenom");
+        printSeparator(50);
+        for (Etudiant etudiant : etudiants) {
+            System.out.println(etudiant);
+        }
+    }
 }

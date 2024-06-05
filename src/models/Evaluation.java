@@ -8,6 +8,8 @@ import tools.Tools;
 import java.sql.*;
 import java.time.LocalDate;
 
+import static models.Matiere.getIdMatiereByName;
+
 public class Evaluation {
     private String nomEvaluation;
     private String description;
@@ -16,66 +18,6 @@ public class Evaluation {
     private int idMatiere;
     private String nomMatiere;
     private String typeEvaluation;
-
-    public Evaluation(String nomEvaluation, String description, LocalDate evaluationDate, int idEvaluation, int idMatiere, String nomMatiere, String typeEvaluation) {
-        this.nomEvaluation = nomEvaluation;
-        this.description = description;
-        this.evaluationDate = evaluationDate;
-        this.idEvaluation = idEvaluation;
-        this.idMatiere = idMatiere;
-        this.nomMatiere = nomMatiere;
-        this.typeEvaluation = typeEvaluation;
-    }
-
-    public Evaluation() {
-    }
-
-    public Evaluation(String nomEvaluation, String description, LocalDate evaluationDate, int idEvaluation, String nomMatiere, String typeEvaluation) {
-        this.nomEvaluation = nomEvaluation;
-        this.description = description;
-        this.evaluationDate = evaluationDate;
-        this.idEvaluation = idEvaluation;
-        this.nomMatiere = nomMatiere;
-        this.typeEvaluation = typeEvaluation;
-    }
-
-
-    public Evaluation(String nomEvaluation, String description, LocalDate evaluationDate, String typeEvaluation, int idMatiere) {
-        this.nomEvaluation = nomEvaluation;
-        this.description = description;
-        this.evaluationDate = evaluationDate;
-        this.typeEvaluation = typeEvaluation;
-        this.idMatiere = idMatiere;
-
-    }
-
-    public void addEvaluation() throws SQLException {
-//        if (nomEvaluation == null || description == null || typeEvaluation == null || nomMatiere == null || evaluationDate == null) {
-//            throw new IllegalArgumentException("Tous les champs doivent être remplis avant d'ajouter une evaluation.");
-//        }
-        Connection connection = Connectivity.getDbConnection();
-        String sql = "INSERT INTO evaluations (nom_evaluation, description, date_evaluation, type,id_matiere) VALUES (?, ?, ?, ?, ?)";
-        try {
-            assert connection != null;
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, nomEvaluation);
-                preparedStatement.setString(2, description);
-                preparedStatement.setDate(3, Date.valueOf(evaluationDate));
-                preparedStatement.setString(4, typeEvaluation);
-
-                if (idMatiere != 0) {
-                    preparedStatement.setInt(5, idMatiere);
-                } else {
-                    preparedStatement.setNull(5, Types.INTEGER);
-                }
-                preparedStatement.executeUpdate();
-                Tools.textInGreen("Evaluation ajouté avec succès!");
-            }
-        } catch (NullPointerException | SQLException nullPointerException){
-            nullPointerException.printStackTrace();
-        }
-
-    }
 
     public String getNomEvaluation() {
         return nomEvaluation;
@@ -133,58 +75,50 @@ public class Evaluation {
         this.typeEvaluation = typeEvaluation;
     }
 
-//    @Override
-//    public String toString() {
-//        return
-//                "Id : " + idEvaluation +
-//                " Nom : '" + nomEvaluation + '\'' +
-//                " description : '" + description + '\'' +
-//                " Date : '" + evaluationDate + '\'' +
-//                " Matiere : '" + nomMatiere + '\'' +
-//                " Type : '" + typeEvaluation + '\'';
-//    }
-//    public String toString() {
-//        return String.format("%-10d %-20s %-20s %-10s %-20s %-20s",
-//                idEvaluation,nomEvaluation, nomMatiere, typeEvaluation,  description,
-//                evaluationDate);
-//    }
-//Cette méthode utilise String.format pour structurer les informations de l'évaluation en colonnes alignées, en spécifiant la largeur de chaque colonne. Les spécificateurs de format utilisés sont :
-//
-//            %-20s : Chaîne de caractères alignée à gauche avec une largeur minimale de 20 caractères.
-//%-30s : Chaîne de caractères alignée à gauche avec une largeur minimale de 30 caractères.
-//%-15s : Chaîne de caractères alignée à gauche avec une largeur minimale de 15 caractères.
-//%-10d : Entier aligné à gauche avec une largeur minimale de 10 caractères.
-//%-20s : Chaîne de caractères alignée à gauche avec une largeur minimale de 20 caractères.
-//%-15s : Chaîne de caractères alignée à gauche avec une largeur minimale de 15 caractères.
-//    @Override
-//    public String toString() {
-//        return String.format("%-20s %-30s %-15s %-10d %-10d %-20s %-15s",
-//                nomEvaluation, description, evaluationDate, idEvaluation, idMatiere, nomMatiere, typeEvaluation);
-//    }
-//@Override
-//    public String toString() {
-//        return String.format("%-10d %-20s %-30s %-15s %-10d %-20s %-15s",
-//                idEvaluation, nomEvaluation, description, evaluationDate, idMatiere, nomMatiere, typeEvaluation);
-//    }
-@Override
-public String toString() {
-    return String.format("%-15d %-30s %-40s %-20s %-30s %-20s",
-            idEvaluation, nomEvaluation, description, evaluationDate, nomMatiere, typeEvaluation);
-}
+    public Evaluation(String nomEvaluation, String description, LocalDate evaluationDate, int idEvaluation, int idMatiere, String nomMatiere, String typeEvaluation) {
+        this.nomEvaluation = nomEvaluation;
+        this.description = description;
+        this.evaluationDate = evaluationDate;
+        this.idEvaluation = idEvaluation;
+        this.idMatiere = idMatiere;
+        this.nomMatiere = nomMatiere;
+        this.typeEvaluation = typeEvaluation;
+    }
 
-//public String toString() {
-//    return String.format("%-10d %-20s %-30s %-15s %-20s %-15s",
-//            idEvaluation, nomEvaluation, description, evaluationDate, nomMatiere, typeEvaluation);
-//}
+    public Evaluation() {
+    }
 
+    public Evaluation(String nomEvaluation, String description, LocalDate evaluationDate, int idEvaluation, String nomMatiere, String typeEvaluation) {
+        this.nomEvaluation = nomEvaluation;
+        this.description = description;
+        this.evaluationDate = evaluationDate;
+        this.idEvaluation = idEvaluation;
+        this.nomMatiere = nomMatiere;
+        this.typeEvaluation = typeEvaluation;
+    }
+
+    public Evaluation(String nomEvaluation, String description, LocalDate evaluationDate, String typeEvaluation, int idMatiere) {
+        this.nomEvaluation = nomEvaluation;
+        this.description = description;
+        this.evaluationDate = evaluationDate;
+        this.typeEvaluation = typeEvaluation;
+        this.idMatiere = idMatiere;
+    }
+
+    // Getters and Setters
+
+    @Override
+    public String toString() {
+        return String.format("%-15d %-30s %-40s %-20s %-30s %-20s",
+                idEvaluation, nomEvaluation, description, evaluationDate, nomMatiere, typeEvaluation);
+    }
 
     public static ObservableList<Evaluation> displayAllEvaluation() throws SQLException {
         Connection connection = Connectivity.getDbConnection();
         String sql = "select * from evaluations join matieres m on m.id_matiere = evaluations.id_matiere";
         ObservableList<Evaluation> listEvaluation = FXCollections.observableArrayList();
 
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -202,17 +136,53 @@ public String toString() {
         return listEvaluation;
     }
 
-    public static void deleteEvaluation(String nomEvaluation, String typeEvaluation,String nomMatiere) throws SQLException {
+    public void addEvaluation() throws SQLException {
         Connection connection = Connectivity.getDbConnection();
-        int idMatier = Matiere.getIdMatierClasseByName(nomEvaluation);
-        String sql = "delete from evaluations where nom_evaluation = ? and  type =? and id_matiere=?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        String insertEvaluationQuery = "INSERT INTO evaluations (nom_evaluation, description, date_evaluation, type, id_matiere) VALUES (?, ?, ?, ?, ?)";
+        String selectEtudiantsQuery = "SELECT id_etudiant FROM etudiants WHERE id_classe = (SELECT id_classe FROM classes join enseignants e on e.id_enseignant = classes.id_enseignant_principal WHERE id_matiere = ?)";
+        String insertNoteQuery = "INSERT INTO notes (id_etudiant, id_evaluation) VALUES (?, ?)";
+
+        try (PreparedStatement insertEvaluationStmt = connection.prepareStatement(insertEvaluationQuery, PreparedStatement.RETURN_GENERATED_KEYS);
+             PreparedStatement selectEtudiantsStmt = connection.prepareStatement(selectEtudiantsQuery);
+             PreparedStatement insertNoteStmt = connection.prepareStatement(insertNoteQuery)) {
+
+            insertEvaluationStmt.setString(1, nomEvaluation);
+            insertEvaluationStmt.setString(2, description);
+            insertEvaluationStmt.setDate(3, Date.valueOf(evaluationDate));
+            insertEvaluationStmt.setString(4, typeEvaluation);
+            insertEvaluationStmt.setInt(5, idMatiere);
+            insertEvaluationStmt.executeUpdate();
+
+            ResultSet generatedKeys = insertEvaluationStmt.getGeneratedKeys();
+            int evaluationId = 0;
+            if (generatedKeys.next()) {
+                evaluationId = generatedKeys.getInt(1);
+            }
+
+            selectEtudiantsStmt.setInt(1, idMatiere);
+            ResultSet etudiantsResultSet = selectEtudiantsStmt.executeQuery();
+
+            while (etudiantsResultSet.next()) {
+                int etudiantId = etudiantsResultSet.getInt("id_etudiant");
+                insertNoteStmt.setInt(1, etudiantId);
+                insertNoteStmt.setInt(2, evaluationId);
+                insertNoteStmt.executeUpdate();
+            }
+        }
+        Tools.textInGreen("Ajout de l'évaluation effectuée");
+    }
+    public static void deleteEvaluation(String nomEvaluation, String typeEvaluation, String nomMatiere) throws SQLException {
+        Connection connection = Connectivity.getDbConnection();
+        int idMatiere = getIdMatiereByName(nomMatiere);
+        String sql = "DELETE FROM evaluations WHERE nom_evaluation = ? AND type = ? AND id_matiere = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, nomEvaluation);
             preparedStatement.setString(2, typeEvaluation);
-            preparedStatement.setInt(3, idMatier);
+            preparedStatement.setInt(3, idMatiere);
             preparedStatement.executeUpdate();
-            System.out.println(" ");
-            Tools.textInGreen("Suppression Effectuer");
+            Tools.textInGreen("Suppression effectuée");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

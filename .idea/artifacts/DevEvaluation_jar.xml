@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DevEvaluation:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DevEvaluation_jar</output-path>
+    <root id="archive" name="DevEvaluation.jar">
+      <element id="module-output" name="DevEvaluation" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/tools/mysql-connector-java-8.0.25.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../mysql-connector-java-8.0.25.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

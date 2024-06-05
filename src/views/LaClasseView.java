@@ -27,6 +27,10 @@ public class LaClasseView {
         String nom = scanner.nextLine();
         System.out.print("Niveau: ");
         String niveau = scanner.nextLine();
-        return new String[]{nom,niveau};
+        System.out.print("Nom du professeur: ");
+        String nomProf = scanner.nextLine();
+        System.out.print("Prenom du professeur: ");
+        String prenomProf = scanner.nextLine();
+        return new String[]{nom,niveau,nomProf,prenomProf};
     }
 }
