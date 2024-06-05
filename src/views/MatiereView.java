@@ -6,7 +6,7 @@ public class MatiereView {
     private Scanner scanner;
 
     public MatiereView() {
-        this.scanner = scanner;
+        this.scanner = new Scanner(System.in);
     }
 
     public void matiereChoice(){
@@ -20,7 +20,7 @@ public class MatiereView {
         System.out.println("0. Retour au menu");
         System.out.println(" ");
     }
-    public String[] demanderInformationsMatiere(){
+    public String[] demanderInformationsAddMatiere(){
         System.out.println("--------------------------------------------------------------------------------");
         System.out.println("                           Information de la matiere                            ");
         System.out.println("--------------------------------------------------------------------------------");
@@ -29,6 +29,19 @@ public class MatiereView {
         System.out.print("Description: ");
         String description = scanner.nextLine();
         return new String[]{nom,description};
+
+    }
+    public String[] demanderInformationsUpdateMatiere(){
+        System.out.println("--------------------------------------------------------------------------------");
+        System.out.println("                           Information de la matiere                            ");
+        System.out.println("--------------------------------------------------------------------------------");
+        System.out.print("ID de la matiere: ");
+        String idMatiere = scanner.nextLine();
+        System.out.print("Nouveau Nom: ");
+        String nom = scanner.nextLine();
+        System.out.print("Nouvelle Description: ");
+        String description = scanner.nextLine();
+        return new String[]{idMatiere,nom,description};
 
     }
 }

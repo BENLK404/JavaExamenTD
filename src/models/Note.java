@@ -3,6 +3,7 @@ package models;
 import database.Connectivity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import tools.Tools;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -176,17 +177,17 @@ public class Note {
         return noteObservableList;
     }
 
-    public void addEvaluationNote(Double note) throws SQLException {
-        Connection connection = Connectivity.getDbConnection();
-        String sql= "update notes set note = ?, commentaires =? where id_etudiant =? and id_evaluation = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setDouble(1, note);
-            preparedStatement.setString(2, commentaire);
-            preparedStatement.setInt(3, idEtudiant);
-            preparedStatement.setInt(4, idEvaluation);
-        }
-
-    }
+//    public void addEvaluationNote(Double note) throws SQLException {
+//        Connection connection = Connectivity.getDbConnection();
+//        String sql= "update notes set note = ?, commentaires =? where id_etudiant =? and id_evaluation = ?";
+//        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+//            preparedStatement.setDouble(1, note);
+//            preparedStatement.setString(2, commentaire);
+//            preparedStatement.setInt(3, idEtudiant);
+//            preparedStatement.setInt(4, idEvaluation);
+//        }
+//
+//    }
     public static void afficherNoteTableau(ObservableList<Note>notes) throws SQLException {
         System.out.printf("%-30s %-20s %-15s %-15s  %-10s %-10s\n",
                 "Evaluations","Types","Noms","Prenoms","Notes","Commentaires");
@@ -196,7 +197,7 @@ public class Note {
         }
     }
 
-    private static void printSeparator(int length) {
+    static void printSeparator(int length) {
         for (int i = 0; i < length; i++) {
             System.out.print("-");
         }
@@ -209,4 +210,35 @@ public class Note {
                 );
     }
 
+    public static int selectIdEvaluation(String matiereEvaluation, String typeEvaluation) throws SQLException {
+        int idEvaluation = 0;
+        Connection connection = Connectivity.getDbConnection();
+        String sql ="select id_evaluation from evaluations " +
+                "join ecole.matieres m on evaluations.id_matiere = m.id_matiere where nom_matiere =? and type =?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, matiereEvaluation);
+            preparedStatement.setString(2, typeEvaluation);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                idEvaluation = resultSet.getInt(1);
+            }
+
+        }
+        return idEvaluation;
+
+    }
+
+    public static void addNote(Double note,int idEtudiant,int idEvaluation,String commentaire) throws SQLException {
+        Connection connection = Connectivity.getDbConnection();
+        String sql = "update notes set note = ? , commentaires = ? where id_etudiant=? and id_evaluation = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setDouble(1, note);
+            preparedStatement.setString(2, commentaire);
+            preparedStatement.setInt(3, idEtudiant);
+            preparedStatement.setInt(4, idEvaluation);
+            preparedStatement.executeUpdate();
+            System.out.println(" ");
+            Tools.textInGreen("Note ajouter");
+        }
+    }
 }

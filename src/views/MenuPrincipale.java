@@ -35,7 +35,7 @@ public class MenuPrincipale {
                 option = Integer.parseInt(scanner.nextLine());
                 validInput = true;  // input is valid, exit the loop
             } catch (NumberFormatException e) {
-                System.out.println("Choisissez un option valide");
+                Tools.textInRed("Choisissez un option valide");
             }
         }
         return option;

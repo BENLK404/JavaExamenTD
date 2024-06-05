@@ -1,6 +1,7 @@
 package tools;
 import database.Connectivity;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +42,20 @@ public class Tools {
         System.out.println(ANSI_WHITE+text+ANSI_RESET);
     }
 
-
+    public static void clearConsole() {
+        try {
+            if (System.getProperty("os.name").startsWith("Windows")) {
+                // Commande pour Windows
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                // Commande pour Unix-based systems (Linux, macOS)
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     public static boolean checkIfExists(String tableName, String columnName, String value) throws SQLException {
         try (Connection connect = Connectivity.getDbConnection()) {
             String query = "SELECT * FROM " + tableName + " WHERE " + columnName + " = ?";

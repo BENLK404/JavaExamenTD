@@ -1,6 +1,7 @@
 package models;
 
 import database.Connectivity;
+import tools.Tools;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,9 +52,11 @@ public class Matiere {
     public void setDescriptionMatiere(String descriptionMatiere) {
         this.descriptionMatiere = descriptionMatiere;
     }
+
+
     public void addMatiere() throws SQLException {
-        if (nomMatiere == null || descriptionMatiere == null ) {
-            throw new IllegalArgumentException("Tous les champs doivent être remplis avant d'ajouter une matiere .");
+        if (nomMatiere == null) {
+            Tools.textInRed("Tous les champs doivent être remplis avant d'ajouter une matiere .");
         }
         Connection connection = Connectivity.getDbConnection();
 
@@ -62,23 +65,25 @@ public class Matiere {
             ps.setString(1, nomMatiere);
             ps.setString(2, descriptionMatiere);
             ps.executeUpdate();
-            System.out.println("Matiere ajouter!");
+            System.out.println(" ");
+            Tools.textInGreen("Matiere ajouter!");
         }catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public void deleteMatiere(int idMatiere) throws SQLException {
+    public void deleteMatiere(String matiere) throws SQLException {
         Connection connection = Connectivity.getDbConnection();
-        String sql = "DELETE FROM matieres WHERE id_matiere = ?";
+        String sql = "DELETE FROM matieres WHERE nom_matiere = ?";
         assert connection != null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setInt(1, idMatiere);
+            preparedStatement.setString(1, matiere);
             preparedStatement.executeUpdate();
-            System.out.println("Matiere supprimer!");
+            System.out.println(" ");
+            Tools.textInGreen("Matiere supprimer!");
         }
 
     }
-    public void updateMatiere(int idMatiere, String nomMatiere, String descriptionMatiere) throws SQLException {
+    public static void updateMatiere(int idMatiere, String nomMatiere, String descriptionMatiere) throws SQLException {
         Connection connection = Connectivity.getDbConnection();
         String sql = "update matieres set nom_matiere = ?, description = ? where id_matiere = ?";
         assert connection != null;
@@ -87,7 +92,8 @@ public class Matiere {
             preparedStatement.setString(2, descriptionMatiere);
             preparedStatement.setInt(3, idMatiere);
             preparedStatement.executeUpdate();
-            System.out.println("Matiere updater!");
+            System.out.println(" ");
+            Tools.textInGreen("Matiere updater!");
         }
 
 
