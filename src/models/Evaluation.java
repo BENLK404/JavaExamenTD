@@ -216,20 +216,4 @@ public String toString() {
         }
     }
 
-//    public static ObservableList<Evaluation> displayAllClassement() throws SQLException {
-//        Connection connection = Connectivity.getDbConnection();
-//        String sql = "select * from evaluations join notes n on evaluations.id_evaluation = n.id_evaluation join etudiants e on e.id_etudiant = n.id_etudiant join matieres m on m.id_matiere = evaluations.id_matiere join classes c on c.id_classe = e.id_classe";
-//        ObservableList<Evaluation> listEvaluation = FXCollections.observableArrayList();
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()) {
-//                Evaluation evaluation = new Evaluation();
-//                evaluation.setNomEvaluation(resultSet.getString("nom_evaluation"));
-//                evaluation.setNomMatiere(resultSet.getString("nom_matiere"));
-//                evaluation.setEvaluationDate(resultSet.getDate("date_evaluation").toLocalDate());
-//
-//            }
-//        }
-//
-//    }
 }

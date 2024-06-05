@@ -74,6 +74,7 @@ public class Note {
     public void setIdEtudiant(int idEtudiant) {
         this.idEtudiant = idEtudiant;
     }
+
     public void addNote() throws SQLException {
         Connection connection = Connectivity.getDbConnection();
 
@@ -89,4 +90,5 @@ public class Note {
 
 
     }
+
 }

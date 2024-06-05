@@ -230,6 +230,33 @@ public class Classement {
         displayRanking(classements);
         return classements;
     }
+    public static ObservableList<Classement> displayClassementGeneral(String type) throws SQLException {
+        ObservableList<Classement> classements = FXCollections.observableArrayList();
+        Classement classement;
+        Connection connection = Connectivity.getDbConnection();
+        String query = "select * from evaluations join notes n on evaluations.id_evaluation = n.id_evaluation join etudiants e on e.id_etudiant = n.id_etudiant join classes c on c.id_classe = e.id_classe join matieres m on m.id_matiere = evaluations.id_matiere where evaluations.type = ? order by note desc";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, type);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                classement = new Classement(
+                        resultSet.getString("nom"),
+                        resultSet.getString("prenom"),
+                        resultSet.getString("nom_classe"),
+                        resultSet.getString("nom_evaluation"),
+                        resultSet.getString("type"),
+                        resultSet.getString("nom_matiere"),
+                        resultSet.getDouble("note"),
+                        resultSet.getDate("date_evaluation").toLocalDate());
+                classements.add(classement);
+
+            }
+        }
+        displayRanking(classements);
+        return classements;
+    }
 
         public static void main (String[]args) throws SQLException {
         displayClassementByClasseType("SIL","devoir","1");
