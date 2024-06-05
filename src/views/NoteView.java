@@ -1,5 +1,7 @@
 package views;
 
+import models.Etudiant;
+
 import java.util.Scanner;
 
 public class NoteView {
@@ -23,14 +25,17 @@ public class NoteView {
         System.out.println("--------------------------------------------------------------------------------");
         System.out.println("                             Information de la note                             ");
         System.out.println("--------------------------------------------------------------------------------");
-        System.out.print("Nom de l'étudiant: ");
+
         String nom = scanner.nextLine();
-        System.out.print("Prenom de l'étudiant : ");
-        String prenom = scanner.nextLine();
-        System.out.print("Evalution: ");
-        String evalution = scanner.nextLine();
-        System.out.print("Note : ");
+        System.out.print("Matière : ");
+        String matiere = scanner.nextLine();
+        System.out.print("Type d'evalution: ");
+        String type_evaluation = scanner.nextLine();
+
+        return new String[]{matiere, type_evaluation};
+    }
+    public void  saisirInfoNote(String nom ,String prenom){
+        System.out.print("Saisir la note de '"+nom+",'"+prenom+"'': ");
         String note = scanner.nextLine();
-        return new String[]{nom, prenom,evalution, note};
     }
 }

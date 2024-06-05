@@ -114,7 +114,7 @@ public class EvaluationView {
     public static void afficherEvaluations(ObservableList<Evaluation> listEvaluationsAffiche) throws SQLException {
         System.out.printf("%-15s %-30s %-40s %-20s %-30s %-20s\n",
                 "ID", "Nom", "Description", "Date", "Nom Matiere", "Type");
-        printSeparator(160); // Adjust the length of the separator based on the total width of the columns
+        printSeparator(160);
         for (Evaluation evaluation : listEvaluationsAffiche) {
             System.out.println(evaluation);
         }
